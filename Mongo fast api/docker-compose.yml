@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  backend:
+    build:
+      context: .
+    container_name: fastapi_service
+    ports:
+      - "9000:9000"
+    depends_on:
+      - database
+
+  database:
+    image: mongo:6
+    container_name: mongo_service
+    restart: always
+    environment:
+      MONGO_INITDB_DATABASE: storedb
+    ports:
+      - "27018:27017"
+    volumes:
+      - mongo_store:/var/lib/mongodb
+
+volumes:
+  mongo_store:
